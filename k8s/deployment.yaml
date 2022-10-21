@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-logger
+  labels:
+    app: python-logger
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: python-logger
+  template:
+    metadata:
+      labels:
+        app: python-logger
+    spec:
+      containers:
+      - name: python-logger
+        image: paigeliu/python-logger:1.4
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - mountPath: /service/dynamic-config
+            name: reloadable-config
+      volumes:
+        - name: reloadable-config
+          configMap:
+            name: python-log-config

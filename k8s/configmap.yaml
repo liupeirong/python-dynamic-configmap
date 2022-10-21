@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: python-log-config
+data:
+  logging.conf: |
+    [loggers]
+    keys=root
+
+    [handlers]
+    keys=stream_handler
+
+    [formatters]
+    keys=formatter
+
+    [logger_root]
+    level=NOTSET
+    handlers=stream_handler
+
+    [handler_stream_handler]
+    class=StreamHandler
+    level=INFO
+    args=(sys.stderr,)
+
+    [formatter_formatter]
+    format=%(asctime)s %(funcName)s %(lineno)d: %(message)s
